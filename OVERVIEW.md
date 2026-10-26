@@ -1,0 +1,7 @@
+Antigravity History is a Paseo provider plugin that runs the Antigravity CLI (`agy`) and stores each conversation's transcript, so the chat is still there after you reopen it.
+
+Paseo's built-in Antigravity provider starts with an empty transcript whenever it reopens a session, because `agy` does not replay past messages. This plugin records the timeline items Paseo already receives and publishes them again when the session opens, using Paseo's replay history contract. The conversation itself continues to live in `agy`; the plugin only restores what Paseo displays.
+
+Requires the Antigravity CLI (`agy`) 1.1.15 or later, installed and signed in on the daemon host, and Paseo 0.13.1 or later. The plugin registers a provider named Antigravity (with history), which sits beside the built-in Antigravity provider instead of replacing it. Pick it when you create an agent to get stored transcripts.
+
+Transcripts are written per conversation to `~/.paseo/agy-history/transcripts/<conversationId>.json` on the daemon host, keeping the most recent 400 timeline items. Deleting a file drops the stored display history for that conversation; `agy` keeps its own copy either way. Sessions created with the built-in provider, or created before the plugin was installed, have no stored transcript. Antigravity runs in full access mode, exactly as with the built-in provider, and the plugin also allows 30 seconds for `agy models` discovery instead of 10.
